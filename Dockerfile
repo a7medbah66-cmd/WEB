@@ -1,33 +1,25 @@
-# Use the official Rust image as the base image
+# Use the official Rust image as a builder
 FROM rust:1.70-slim as builder
 
-# Set the working directory
 WORKDIR /app
 
-# Copy the Cargo.toml and Cargo.lock files
+# 1. Copy the workspace configuration first
 COPY Cargo.toml Cargo.lock ./
 
-# Copy the source code
+# 2. Copy the actual source folders 
+# Ensure these folder names match your 'ls' output EXACTLY (case-sensitive)
 COPY engine/ ./engine/
-COPY browser_ui/ ./browser_ui/
 COPY engine_server/ ./engine_server/
+# We skip browser_ui for the server build to save time/space
+# COPY browser_ui/ ./browser_ui/ 
 
-# Build the engine_server binary
+# 3. Build the headless server
 RUN cargo build --release -p engine_server
 
-# Create a new stage for the runtime image
+# Final Stage: Use a tiny runtime image
 FROM debian:bullseye-slim
+WORKDIR /app
+COPY --from=builder /app/target/release/engine_server .
 
-# Install necessary runtime dependencies
-RUN apt-get update && apt-get install -y \
-    ca-certificates \
-    && rm -rf /var/lib/apt/lists/*
-
-# Copy the binary from the builder stage
-COPY --from=builder /app/target/release/engine_server /usr/local/bin/engine_server
-
-# Expose the port that the app runs on
-EXPOSE 3000
-
-# Set the default command to run the binary
-CMD ["engine_server"]
+# Set the start command
+CMD ["./engine_server"]
