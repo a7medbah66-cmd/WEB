@@ -1,0 +1,7 @@
+/workspaces/WEB/rust_browser/target/debug/deps/event_listener-d15a491700e99141.d: /home/codespace/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/event-listener-5.4.1/src/lib.rs /home/codespace/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/event-listener-5.4.1/src/intrusive.rs /home/codespace/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/event-listener-5.4.1/src/notify.rs
+
+/workspaces/WEB/rust_browser/target/debug/deps/libevent_listener-d15a491700e99141.rmeta: /home/codespace/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/event-listener-5.4.1/src/lib.rs /home/codespace/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/event-listener-5.4.1/src/intrusive.rs /home/codespace/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/event-listener-5.4.1/src/notify.rs
+
+/home/codespace/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/event-listener-5.4.1/src/lib.rs:
+/home/codespace/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/event-listener-5.4.1/src/intrusive.rs:
+/home/codespace/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/event-listener-5.4.1/src/notify.rs:

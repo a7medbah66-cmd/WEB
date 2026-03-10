@@ -1,0 +1,8 @@
+[package]
+name = "browser_ui"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+engine = { path = "../engine" }
+eframe = "0.27" # Pure Rust GUI framework
