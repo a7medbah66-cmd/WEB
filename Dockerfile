@@ -1,25 +1,31 @@
-# Use the official Rust image as a builder
+# Stage 1: Builder
 FROM rust:1.70-slim as builder
 
+# Set the working directory FIRST
 WORKDIR /app
 
-# 1. Copy the workspace configuration first
-COPY Cargo.toml Cargo.lock ./
+# Copy the manifest files
+# Using a wildcard (*) for the lockfile makes it optional during COPY
+COPY Cargo.toml Cargo.lock* ./
 
-# 2. Copy the actual source folders 
-# Ensure these folder names match your 'ls' output EXACTLY (case-sensitive)
+# Copy only the folders needed for the server
 COPY engine/ ./engine/
 COPY engine_server/ ./engine_server/
-# We skip browser_ui for the server build to save time/space
-# COPY browser_ui/ ./browser_ui/ 
 
-# 3. Build the headless server
+# Build the headless server (this will generate the lockfile if missing)
 RUN cargo build --release -p engine_server
 
-# Final Stage: Use a tiny runtime image
+# Stage 2: Runtime
 FROM debian:bullseye-slim
 WORKDIR /app
+
+# Install SSL certificates (needed for engine/network.rs to hit HTTPS sites)
+RUN apt-get update && apt-get install -y ca-certificates && rm -rf /var/lib/apt/lists/*
+
+# Copy the binary from the builder stage
 COPY --from=builder /app/target/release/engine_server .
 
-# Set the start command
+# Expose the port Railway uses
+EXPOSE 8080
+
 CMD ["./engine_server"]
