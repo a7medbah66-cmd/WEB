@@ -19,4 +19,4 @@ README.md
 *.md
 
 # Browser UI (not needed for server)
-browser_ui/
+#browser_ui/
