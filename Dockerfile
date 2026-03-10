@@ -6,6 +6,13 @@ WORKDIR /app
 
 # Copy the manifest files
 # Using a wildcard (*) for the lockfile makes it optional during COPY
+
+# ... (inside the builder stage)
+COPY engine/ ./engine/
+COPY engine_server/ ./engine_server/
+COPY browser_ui/ ./browser_ui/  # <--- Add this line
+# ...
+
 COPY Cargo.toml Cargo.lock* ./
 
 # Copy only the folders needed for the server
